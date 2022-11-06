@@ -30,16 +30,16 @@ block details
                         td
                             if customer.Admin == 0
                                 form.dev-form(action='/admin/customers/' + customer.UserID + '/makeAdmin', method='POST')
-                                    button.cus-btn.btn.btn-default(type='submit')
+                                    button.cus-btn.btn.btn-default.btn-submit(type='submit')
                                         i.fa.fa-unlock
                                         = ' Make Admin'
                             else
                                 form.dev-form(action='/admin/customers/' + customer.UserID + '/removeAdmin', method='POST')
-                                    button.cus-btn.btn.btn-default(type='submit')
+                                    button.cus-btn.btn.btn-default.btn-edit2(type='submit')
                                         i.fa.fa-lock
                                         = ' Remove Admin'
                         td
                             form.dev-form(action='/admin/customers/' + customer.UserID + '/delete', method='POST')
-                                button.cus-btn.btn.btn-default(type='submit')
+                                button.cus-btn.btn.btn-default.btn-close(type='submit')
                                     i.fa.fa-trash-o
                                     = ' Delete'

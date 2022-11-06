@@ -2,6 +2,11 @@ extends admin
 
 block details
     .row
+        form(action='/admin/cat/add', method='GET')
+            button.btn.btn-default.btn-close.green-color(type='submit')
+                i.fa.fa-plus
+                = ' Add new category'
+        .mb-2
         .features_items
             if categories
                 each category in categories
@@ -16,17 +21,13 @@ block details
                                 p=category.Description
                         .col-sm-3
                                 form.dev-form(action='/admin/cat/' + category.CategoryID + '/edit', method='GET')
-                                    button.btn.btn-default(type='submit')
+                                    button.btn.btn-default.btn-edit(type='submit')
                                         i.fa.fa-edit
                                         = ' Edit'
 
                                 form.dev-form(action='/admin/cat/' + category.CategoryID + '/delete', method='POST')
-                                    button.btn.btn-default(type='submit')
+                                    button.btn.btn-default.btn-close(type='submit')
                                         i.fa.fa-trash-o
                                         = ' Delete'
-        form(action='/admin/cat/add', method='GET')
-            button.btn.btn-default(type='submit')
-                i.fa.fa-plus
-                = ' Add new category'
         br
         br

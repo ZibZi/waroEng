@@ -23,7 +23,7 @@ app.locals.pretty = true;
 
 // set up express application
     // setup favicon if needed
-app.use(favicon(path.join(__dirname, 'public', '/img/ico/favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', '/img/ico/waroeng.ico')));
     // log every request to the console
 app.use(morgan('dev'));
     // csrf token init

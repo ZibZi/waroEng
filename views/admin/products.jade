@@ -2,6 +2,12 @@ extends admin
 
 block details
     .row
+
+        form(action='/admin/products/add', method='GET')
+            button.btn.btn-default.btn-close.green-color(type='submit')
+                i.fa.fa-plus
+                = ' Add new product'
+        .mb-2
         .features_items
             if products
                 each product in products
@@ -32,7 +38,7 @@ block details
 
                             p
                                 b Price:
-                                = ' ₱' + product.ProductPrice
+                                = ' Rp. ' + product.ProductPrice + ',-'
 
                             - var feature = 'Yes'
                             if (product.Feature == 0)
@@ -45,17 +51,13 @@ block details
 
                         .col-sm-3
                             form.dev-form(action='/admin/products/' + product.ProductID + '/edit', method='GET')
-                                button.btn.btn-default(type='submit')
+                                button.btn.btn-default.btn-edit(type='submit')
                                     i.fa.fa-edit
                                     = ' Edit'
 
                             form.dev-form(action='/admin/products/' + product.ProductID + '/delete', method='POST')
-                                button.btn.btn-default(type='submit')
+                                button.btn.btn-default.btn-close(type='submit')
                                     i.fa.fa-trash-o
                                     = ' Delete'
-    form(action='/admin/products/add', method='GET')
-        button.btn.btn-default(type='submit')
-            i.fa.fa-plus
-            = ' Add new product'
     br
     br

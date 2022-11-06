@@ -14,7 +14,7 @@ block content
             .row
                 if addresses
                     each address in addresses
-                        .cus-name.col-sm-4
+                        .cus-name.col-sm-5
                             h4= address.FullName
                             p
                                 span= address.StreetAddress
@@ -25,7 +25,7 @@ block content
                             p= 'Tel: ' + address.Phone
 
                             form(action='/checkout/delivery/' + address.AddressID, method='POST')
-                                input.dev-btn.btn.btn-default.add-to-cart(type='submit', value='Deliver to this address')
+                                input.dev-btn.btn.btn-default.add-to-cart.input-btn-submit(type='submit', value='Deliver to this address')
             .step-one#new-address
                 h2.heading New delivery address
 
@@ -58,4 +58,4 @@ block content
                                 input(type='tel', name='phone', id='phone')
                                 br
                                 br
-                                input.dev-btn.btn.btn-default.add-to-cart(type='submit', value='Deliver to this address')
+                                input.dev-btn.btn.btn-default.add-to-cart.input-btn-submit(type='submit', value='Deliver to this address')

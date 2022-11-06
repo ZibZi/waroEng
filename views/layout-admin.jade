@@ -30,23 +30,8 @@ html
                             .logo.pull-left
                                 a(href='/')
                                     img(src='/img/waroEng4x.png', alt='waroEng Logo')
-                        .col-sm-6
-                            button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
-                                span.sr-only Toggle navigation
-                                span.icon-bar
-                                span.icon-bar
-                                span.icon-bar
-                            .mainmenu.pull-right.pt-2
-                                ul.nav.navbar-nav.collapse.navbar-collapse
-                                    li
-                                        a(class={active: currentUrl === '/'}, href='/')
-                                            | Home
-                                    li
-                                        a(class={active: currentUrl === '/cat/all'}, href='/cat/all')
-                                            | Products
-                                    li
-                                        a(class={active: currentUrl === '/contact-us'}, href='/contact-us') Contact Us
-                        .col-sm-4
+                        .col.sm.7
+                        .col-sm-10
                             .shop-menu.pull-right
                                 ul.nav.navbar-nav
                                     -var orderCus = 'Account'
@@ -54,10 +39,6 @@ html
                                     if customer
                                         -orderCus=customer.FullName
                                         -link='/usr/'
-                                    li
-                                        a(href='/cart')
-                                            i.fa.fa-shopping-cart
-                                            |  Cart
                                     li
                                         a(href=link)
                                             i.fa.fa-user
@@ -73,8 +54,6 @@ html
         block content
 
         //Footer
-        footer#footer
-            p e-Commerce waroEng -- TEAM 2 Informatika 5 C
         ///Footer
         script(src='/js/jquery-2.1.4.min.js')
         script(src='/js/bootstrap.min.js')

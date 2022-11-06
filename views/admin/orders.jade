@@ -16,13 +16,13 @@ block details
                         td= order.OrderID
                         td= order.OrderDate
                         td= order.Status
-                        td= ' ₱' + order.Total
+                        td= ' Rp. ' + order.Total + ",-"
                         td
                             form.dev-form(action='/admin/orders/' + order.OrderID, method='GET')
-                                button.order-btn.btn.btn-default(type='submit')
+                                button.order-btn.btn.btn-default.btn-view(type='submit')
                                     i.fa.fa-eye
                                     = ' View'
                             form.dev-form(action='/admin/orders/' + order.OrderID + '/update', method='GET')
-                                button.order-btn.btn.btn-default(type='submit')
+                                button.order-btn.btn.btn-default.btn-update(type='submit')
                                     i.fa.fa-list
                                     = ' Update status'
