@@ -29,6 +29,10 @@ services:
 ##Installation
 * Install dependencies in `package.json`: `npm install`
 
+##make a connection in database.js
+```
+
+```
 ##Usage
 * Execute `node bin/www.js` from project directory
 
