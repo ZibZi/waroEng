@@ -1,4 +1,4 @@
-##Requirements
+## Requirements
 * Node.js with the following modules
     * body-parser: ~1.13.2
     * cookie-parser: ~1.3.5
@@ -26,10 +26,10 @@ services:
       - SA_PASSWORD=yourStrong(!)Password
       - MSSQL_PID=Express
 ```
-##Installation
+## Installation
 * Install dependencies in `package.json`: `npm install`
 
-##make a connection in database.js
+## make a connection in database.js
 ```
 // database module
 var mysql = require('mssql');
@@ -48,7 +48,7 @@ var config = {
     }
 };
 ```
-##initialisasi database
+## initialisasi database
 ```
 // init database
 var pool = new mysql.ConnectionPool(config, function (err) {
@@ -57,7 +57,7 @@ var pool = new mysql.ConnectionPool(config, function (err) {
     }
 });
 ```
-##fetching database 
+## fetching database 
 ```
 //Fetch data
 function RunQuery(sqlStr, callback) {
@@ -74,13 +74,13 @@ function RunQuery(sqlStr, callback) {
     });
 }
 ```
-##expose function to app using module.exports
+## expose function to app using module.exports
 ```
 module.exports = {
     RunQuery: RunQuery
 };
 ```
-##Usage
+## Usage
 * Execute `node bin/www.js` from project directory
 
 
