@@ -12,7 +12,7 @@
     * slugify: ~0.1.1
 
 ## install mssql via docker with docker-compose.yml 
----
+```
 version: "3"
 services:
   sql-server:
@@ -25,7 +25,7 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=yourStrong(!)Password
       - MSSQL_PID=Express
- ---
+```
 ##Installation
 * Install dependencies in `package.json`: `npm install`
 
