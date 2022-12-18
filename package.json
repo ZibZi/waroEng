@@ -6,21 +6,39 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcrypt-nodejs": "~0.0.3",
     "body-parser": "~1.13.2",
+    "change-case": "~2.3.0",
+    "connect-flash": "~0.1.1",
     "cookie-parser": "~1.3.5",
+    "csrf": "~3.0.0",
     "debug": "~2.2.0",
     "express": "~4.13.1",
+    "express-session": "~1.12.1",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0",
+    "mssql": "^9.0.1",
     "mysql": "~2.9.0",
     "passport": "~0.3.2",
     "passport-local": "~1.0.0",
+    "serve-favicon": "~2.3.0",
     "slug": "~0.9.1",
-    "change-case": "~2.3.0",
-    "bcrypt-nodejs": "~0.0.3",
-    "connect-flash": "~0.1.1",
-    "express-session": "~1.12.1",
-    "csrf": "~3.0.0"
-  }
+    "tedious": "^15.1.2"
+  },
+  "description": "* Node.js with the following modules\r     * body-parser: ~1.13.2\r     * cookie-parser: ~1.3.5\r     * debug: ~2.2.0\r     * express: ~4.13.1\r     * jade: ~1.11.0\r     * morgan: ~1.6.1\r     * serve-favicon: ~2.3.0\r     * mysql: ~2.9.0\r     * passport: ~0.3.2\r     * slugify: ~0.1.1",
+  "main": "app.js",
+  "bin": {
+    "waroeng": "bin/www.js"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KomisiPAW2/waroEng.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KomisiPAW2/waroEng/issues"
+  },
+  "homepage": "https://github.com/KomisiPAW2/waroEng#readme"
 }
