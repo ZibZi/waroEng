@@ -26,6 +26,7 @@ services:
       - SA_PASSWORD=yourStrong(!)Password
       - MSSQL_PID=Express
 ```
+sesudah itu gunakan ```docker compose -f docker-compose.yml up -d```
 ## Installation
 * Install dependencies in `package.json`: `npm install`
 
