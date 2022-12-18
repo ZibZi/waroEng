@@ -31,7 +31,54 @@ services:
 
 ##make a connection in database.js
 ```
+// database module
+var mysql = require('mssql');
 
+// config database
+var config = {
+    user: 'sa',
+    password: 'yourStrong(!)Password',
+    server: 'localhost',
+    database: 'waroeng',
+    port: 1433,
+    options: {
+        encrypt: true, // Use this if you're on Windows Azure
+        useUTC: true,
+        trustServerCertificate: true
+    }
+};
+```
+##initialisasi database
+```
+// init database
+var pool = new mysql.ConnectionPool(config, function (err) {
+    if (err) {
+        ShowErrors(err);
+    }
+});
+```
+##fetching database 
+```
+//Fetch data
+function RunQuery(sqlStr, callback) {
+    var request = new mysql.Request(pool, function (err) {
+        if (err) {
+            ShowErrors(err);
+        }
+    });
+    request.query(sqlStr, function (err, recordset) {
+        if (err) {
+            ShowErrors(err);
+        }
+        callback(recordset);
+    });
+}
+```
+##expose function to app using module.exports
+```
+module.exports = {
+    RunQuery: RunQuery
+};
 ```
 ##Usage
 * Execute `node bin/www.js` from project directory
