@@ -83,5 +83,5 @@ module.exports = {
 ```
 ## Usage
 * Execute `node bin/www.js` from project directory
-
+* or ''' npm start ''' from terminal
 
