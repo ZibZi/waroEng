@@ -36,7 +36,7 @@ router.route('/cat')
 
         var sqlStr = '\
         SELECT *\
-        FROM Categories';
+        FROM waroeng.categories';
 
         RunQuery(sqlStr, function (categories) {
             var contextDict = {
@@ -54,7 +54,7 @@ router.route('/cat/:id/edit')
 
         var sqlStr = '\
         SELECT *\
-        FROM Categories\
+        FROM waroeng.categories\
         WHERE CategoryID = ' + req.params.id;
 
         RunQuery(sqlStr, function (category) {
@@ -70,7 +70,7 @@ router.route('/cat/:id/edit')
 
     .post(isAdmin, function (req, res, next) {
         var sqlStr = '\
-        UPDATE Categories\
+        UPDATE warpeng.categories\
         SET CategoryName = \'' + req.body.name + '\', \
             Description = \'' + req.body.description + '\', \
             CategorySlug = \'' + slug(req.body.name) + '\' ' +
@@ -85,7 +85,7 @@ router.route('/cat/:id/edit')
 router.route('/cat/:id/delete')
     .post(isAdmin, function (req, res, next) {
         sqlStr = '\
-            DELETE FROM Categories\
+            DELETE FROM waroeng.categories\
             WHERE CategoryID = ' + req.params.id;
 
         RunQuery(sqlStr, function (result) {
@@ -105,7 +105,7 @@ router.route('/cat/add')
 
     .post(isAdmin, function (req, res, next) {
         var sqlStr = '\
-        INSERT INTO Categories\
+        INSERT INTO waroeng.categories\
         VALUES (null, \'' + req.body.name + '\', \
             \'' + req.body.description + '\', \
             \'' + slug(req.body.name) + '\', \
@@ -121,10 +121,10 @@ router.route('/cat/add')
 router.route('/products')
     .get(isAdmin, function (req, res, next) {
         var sqlStr = '\
-                    SELECT Products.*, Categories.CategoryName\
-                    FROM Products\
-                    INNER JOIN Categories\
-                    ON Products.CategoryID = Categories.CategoryID';
+                    SELECT waroeng.products.*, waroeng.categories.CategoryName\
+                    FROM waroeng.products\
+                    INNER JOIN waroeng.categories\
+                    ON waroeng.products.CategoryID = waroeng.categories.CategoryID';
 
         RunQuery(sqlStr, function (products) {
 
@@ -142,17 +142,17 @@ router.route('/products/:id/edit')
     .get(isAdmin, function (req, res, next) {
 
         var sqlStr = '\
-                    SELECT Products.*, Categories.CategoryName\
-                    FROM Products\
-                    INNER JOIN Categories\
-                    ON Products.CategoryID = Categories.CategoryID\
+                    SELECT waroeng.products.*, waroeng.categories.CategoryName\
+                    FROM waroeng.products\
+                    INNER JOIN waroeng.categories\
+                    ON waroeng.products.CategoryID = waroeng.categories.CategoryID\
                     WHERE ProductID = ' + req.params.id;
 
         RunQuery(sqlStr, function (product) {
 
             sqlStr = '\
                 SELECT *\
-                FROM Categories';
+                FROM waroeng.categories';
 
             RunQuery(sqlStr, function (categories) {
                 var contextDict = {
@@ -169,7 +169,7 @@ router.route('/products/:id/edit')
 
     .post(isAdmin, function (req, res, next) {
         var sqlStr = '\
-        UPDATE Products\
+        UPDATE waroeng.products\
         SET ProductName = \'' + req.body.name + '\', \
             CategoryID = ' + req.body.category + ', \
             ProductPrice = ' + req.body.price + ', \
@@ -190,7 +190,7 @@ router.route('/products/:id/delete')
     .post(isAdmin, function (req, res, next) {
 
         var sqlStr = '\
-            DELETE FROM Products\
+            DELETE FROM waroeng.products\
             WHERE ProductID = ' + req.params.id;
 
         RunQuery(sqlStr, function (result) {
@@ -203,7 +203,7 @@ router.route('/products/add')
 
         var sqlStr = '\
             SELECT *\
-            FROM Categories';
+            FROM waroeng.categories';
 
         RunQuery(sqlStr, function (categories) {
             var contextDict = {
@@ -218,7 +218,7 @@ router.route('/products/add')
 
     .post(isAdmin, function (req, res, next) {
         var sqlStr = '\
-            INSERT INTO Products\
+            INSERT INTO waroeng.products\
             VALUES (null, \'' + req.body.name + '\', '
                 + req.body.category + ', '
                 + req.body.price + ', '
@@ -241,7 +241,7 @@ router.route('/orders')
 
         var selectQuery = '\
             SELECT *\
-            FROM Orders';
+            FROM waroeng.orders';
 
         RunQuery(selectQuery, function (orders) {
 
@@ -260,35 +260,35 @@ router.route('/orders/:id')
         //get order info
         var selectQuery = '\
             SELECT *\
-            FROM Orders\
+            FROM waroeng.orders\
             WHERE OrderID = ' + req.params.id;
 
         RunQuery(selectQuery, function (order) {
             //get user info
             selectQuery = '\
             SELECT *\
-            FROM Users\
+            FROM waroeng.users\
             WHERE UserID = ' + order[0].UserID;
 
             RunQuery(selectQuery, function (orderCustomer) {
                 //get delivery info
                 selectQuery = '\
                 SELECT *\
-                FROM Addresses\
+                FROM waroeng.addresses\
                 WHERE AddressID = ' + order[0].AddressID;
 
                 RunQuery(selectQuery, function (address) {
                     //get order info
                     selectQuery = '\
                     SELECT *\
-                    FROM `Order Details`\
+                    FROM `waroeng.order waroeng.details`\
                     INNER JOIN (\
-                        SELECT Products.*, Categories.CategorySlug\
-                        FROM Products\
-                        INNER JOIN Categories\
-                        ON Products.CategoryID = Categories.CategoryID\
+                        SELECT waroeng.products.*, waroeng.categories.CategorySlug\
+                        FROM waroeng.products\
+                        INNER JOIN waroeng.categories\
+                        ON waroeng.products.CategoryID = waroeng.categories.CategoryID\
                     ) `Table`\
-                    ON `Order Details`.ProductID = `Table`.ProductID\
+                    ON `waroeng.order waroeng.details`.ProductID = `Table`.ProductID\
                     WHERE OrderID = ' + order[0].OrderID;
 
                     RunQuery(selectQuery, function (products) {
@@ -315,28 +315,28 @@ router.route('/orders/:id/update')
 
         var selectQuery = '\
             SELECT *\
-            FROM Orders\
+            FROM waroeng.orders\
             WHERE OrderID = ' + req.params.id;
 
         RunQuery(selectQuery, function (order) {
 
             selectQuery = '\
                 SELECT *\
-                FROM Addresses\
+                FROM waroeng.addresses\
                 WHERE AddressID = ' + order[0].AddressID;
 
             RunQuery(selectQuery, function (address) {
 
                 selectQuery = '\
                     SELECT *\
-                    FROM `Order Details`\
+                    FROM `waroeng.order waroeng.details`\
                     INNER JOIN (\
-                        SELECT Products.*, Categories.CategorySlug\
-                        FROM Products\
-                        INNER JOIN Categories\
-                        ON Products.CategoryID = Categories.CategoryID\
+                        SELECT waroeng.products.*, waroeng.categories.CategorySlug\
+                        FROM waroeng.products\
+                        INNER JOIN waroeng.categories\
+                        ON waroeng.products.CategoryID = waroeng.categories.CategoryID\
                     ) `Table`\
-                    ON `Order Details`.ProductID = `Table`.ProductID\
+                    ON `waroeng.order waroeng.details`.ProductID = `Table`.ProductID\
                     WHERE OrderID = ' + order[0].OrderID;
 
                 RunQuery(selectQuery, function (products) {
@@ -357,7 +357,7 @@ router.route('/orders/:id/update')
 
     .post(isAdmin, function (req, res, next) {
         var sqlStr = '\
-        UPDATE Orders\
+        UPDATE waroeng.orders\
         SET Status = \'' + req.body.status + '\' \
         WHERE OrderID = ' + req.params.id;
 
@@ -371,7 +371,7 @@ router.route('/customers')
 
         var selectQuery = '\
             SELECT *\
-            FROM Users';
+            FROM waroeng.users';
 
         RunQuery(selectQuery, function (customers) {
 
@@ -389,7 +389,7 @@ router.route('/customers/:id/makeAdmin')
     .post(isAdmin, function (req, res) {
 
         var updateQuery = '\
-            UPDATE Users\
+            UPDATE waroeng.users\
             SET Admin = 1\
             WHERE UserID = ' + req.params.id;
 
@@ -403,7 +403,7 @@ router.route('/customers/:id/removeAdmin')
     .post(isAdmin, function (req, res) {
 
         var updateQuery = '\
-            UPDATE Users\
+            UPDATE waroeng.users\
             SET Admin = 0\
             WHERE UserID = ' + req.params.id;
 
@@ -417,7 +417,7 @@ router.route('/customers/:id/delete')
     .post(isAdmin, function (req, res) {
 
         var deleteQuery = '\
-            DELETE FROM Users\
+            DELETE FROM waroeng.users\
             WHERE UserID = ' + req.params.id;
 
         RunQuery(deleteQuery, function (result) {

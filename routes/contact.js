@@ -27,7 +27,7 @@ router.route('/')
             email = req.user.Email;
         }
 
-        var insertQuery = 'INSERT INTO Messages\
+        var insertQuery = 'INSERT INTO waroeng.messages\
             VALUES(null, \''+
             name + '\', \'' +
             email + '\', \'' +

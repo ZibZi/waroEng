@@ -1,5 +1,5 @@
 // database module
-var mysql = require('mssql');
+var mssql = require('mssql');
 
 // config database
 var config = {
@@ -16,7 +16,7 @@ var config = {
 };
 
 // init database
-var pool = new mysql.ConnectionPool(config, function (err) {
+var pool = new mssql.ConnectionPool(config, function (err) {
     if (err) {
         ShowErrors(err);
     }
@@ -24,7 +24,7 @@ var pool = new mysql.ConnectionPool(config, function (err) {
 
 //Fetch data
 function RunQuery(sqlStr, callback) {
-    var request = new mysql.Request(pool, function (err) {
+    var request = new mssql.Request(pool, function (err) {
         if (err) {
             ShowErrors(err);
         }

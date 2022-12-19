@@ -51,7 +51,7 @@ router.route('/:username/edit')
         var form = req.body;
         if (bcrypt.compareSync(form.password, req.user.Password)) {
             var updateQuery = '\
-                UPDATE Users\
+                UPDATE waroeng.users\
                 SET Fullname = \'' + form.fullName + '\', \
                     Email = \'' + form.email + '\', \
                     StreetAddress = \'' + form.streetAddress + '\', \
@@ -85,7 +85,7 @@ router.route('/:username/change-password')
             if (bcrypt.compareSync(form.currentPassword, req.user.Password)) {
                 var passwordHash = bcrypt.hashSync(form.newPassword, null, null);
                 var updateQuery = '\
-                UPDATE Users\
+                UPDATE waroeng.users\
                 SET Password = \'' + passwordHash + '\' \
                 WHERE UserID = ' + req.user.UserID;
 
@@ -108,7 +108,7 @@ router.route('/:username/orders')
 
         var selectQuery = '\
             SELECT *\
-            FROM Orders\
+            FROM waroeng.orders\
             WHERE UserID = ' + req.user.UserID;
 
         RunQuery(selectQuery, function (orders) {
@@ -125,28 +125,28 @@ router.route('/:username/orders/:id')
         //get order info
         var selectQuery = '\
             SELECT *\
-            FROM Orders\
+            FROM waroeng.orders\
             WHERE OrderID = ' + req.params.id;
 
         RunQuery(selectQuery, function (order) {
             //get delivery info
             selectQuery = '\
                 SELECT *\
-                FROM Addresses\
+                FROM waroeng.addresses\
                 WHERE AddressID = ' + order[0].AddressID;
 
             RunQuery(selectQuery, function (address) {
                 //get order info
                 selectQuery = '\
                     SELECT *\
-                    FROM `Order Details`\
+                    FROM `waroeng.order waroeng.details`\
                     INNER JOIN (\
-                        SELECT Products.*, Categories.CategorySlug\
-                        FROM Products\
-                        INNER JOIN Categories\
-                        ON Products.CategoryID = Categories.CategoryID\
+                        SELECT waroeng.products.*, waroeng.categories.CategorySlug\
+                        FROM waroeng.products\
+                        INNER JOIN waroeng.categories\
+                        ON waroeng.products.CategoryID = waroeng.categories.CategoryID\
                     ) `Table`\
-                    ON `Order Details`.ProductID = `Table`.ProductID\
+                    ON `waroeng.order waroeng.details`.ProductID = `Table`.ProductID\
                     WHERE OrderID = ' + order[0].OrderID;
 
                 RunQuery(selectQuery, function (products) {
@@ -171,7 +171,7 @@ router.route('/:username/addresses')
 
         var selectQuery = '\
             SELECT *\
-            FROM Addresses\
+            FROM waroeng.addresses\
             WHERE UserID = ' + req.user.UserID;
 
         RunQuery(selectQuery, function (addresses) {
@@ -188,7 +188,7 @@ router.route('/:username/addresses/:id/edit')
 
         var selectQuery = '\
             SELECT *\
-            FROM Addresses\
+            FROM waroeng.addresses\
             WHERE AddressID = ' + req.params.id;
 
         RunQuery(selectQuery, function (address) {
@@ -204,7 +204,7 @@ router.route('/:username/addresses/:id/edit')
         var form = req.body;
 
         var updateQuery = '\
-                UPDATE Addresses\
+                UPDATE waroeng.addresses\
                 SET Fullname = \'' + form.fullName + '\', \
                     StreetAddress = \'' + form.streetAddress + '\', \
                     PostCode = \'' + form.postcode + '\', \
@@ -222,7 +222,7 @@ router.route('/:username/addresses/:id/delete')
     .post(isLoggedIn, function (req, res, next) {
 
         var sqlStr = '\
-            DELETE FROM Addresses\
+            DELETE FROM waroeng.addresses\
             WHERE AddressID = ' + req.params.id;
 
         RunQuery(sqlStr, function (result) {
@@ -242,7 +242,7 @@ router.route('/:username/addresses/add')
         var form = req.body;
 
         var insertQuery = '\
-                INSERT INTO Addresses\
+                INSERT INTO waroeng.addresses\
                 VALUES (null, ' + req.user.UserID + ', \
                     \'' + form.fullName + '\', \
                     \'' + form.streetAddress + '\', \

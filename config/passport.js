@@ -28,7 +28,7 @@ module.exports = function (passport) {
     passport.deserializeUser(function (userId, done) {
         var sqlStr = '\
             SELECT *\
-            FROM users\
+            FROM waroeng.users\
             where UserID = \'' + userId + '\'';
         RunQuery(sqlStr, function (rows) {
             done(null, rows[0]);
@@ -43,7 +43,7 @@ module.exports = function (passport) {
         },
         function (req, username, password, done) { // callback with username and password from form
             // check to see if the user exists or not
-            var sqlStr = 'SELECT * FROM users WHERE Username = \'' + username + '\'';
+            var sqlStr = 'SELECT * FROM waroeng.users WHERE Username = \'' + username + '\'';
             RunQuery(sqlStr, function (rows) {
                 // if no user is found, return the message
                 if (rows.length < 1)
@@ -78,7 +78,7 @@ module.exports = function (passport) {
             else {
 
                 var selectQuery = 'SELECT *\
-                    FROM users\
+                    FROM waroeng.users\
                     WHERE email = \'' + email + '\'';
                 RunQuery(selectQuery, function (emailRows) {
                     if (emailRows.length > 0) {
@@ -87,7 +87,7 @@ module.exports = function (passport) {
                     else {
                         selectQuery = '\
                         SELECT *\
-                        FROM users\
+                        FROM waroeng.users\
                         WHERE username = \'' + username + '\'';
                         RunQuery(selectQuery, function (usernameRows) {
                             if (usernameRows.length > 0) {
@@ -103,7 +103,7 @@ module.exports = function (passport) {
                                 var country = req.body.country;
                                 var passwordHash = bcrypt.hashSync(password, null, null);
 
-                                var insertQuery = 'INSERT INTO Users\
+                                var insertQuery = 'INSERT INTO waroeng.users\
                                     VALUES(null,\
                                     \'' + fullName + '\', \
                                     \'' + address + '\', \
@@ -120,7 +120,7 @@ module.exports = function (passport) {
                                     var user = {
                                         UserID: insertResult.insertId
                                     };
-                                    insertQuery = 'INSERT INTO Addresses\
+                                    insertQuery = 'INSERT INTO waroeng.addresses\
                                     VALUES(null, ' +
                                         insertResult.insertId + ', \'' +
                                         fullName + '\', \'' +

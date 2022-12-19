@@ -29,7 +29,7 @@ router.route('/delivery')
         // show addresses
         var selectQuery = '\
             SELECT *\
-            FROM Addresses\
+            FROM waroeng.addresses\
             WHERE UserID = ' + req.user.UserID + ';';
 
         RunQuery(selectQuery, function (rows) {
@@ -62,7 +62,7 @@ router.route('/delivery/new')
 
         // add address
         var insertQuery = '\
-            INSERT INTO Addresses\
+            INSERT INTO waroeng.addresses\
             VALUES(null, ' +
             req.user.UserID + ', \'' +
             fullName + '\', \'' +
@@ -93,7 +93,7 @@ router.route('/delivery/:id')
     .post(function (req, res, next) {
         var selectQuery = '\
             SELECT *\
-            FROM Addresses\
+            FROM waroeng.addresses\
             WHERE AddressID = ' + req.params.id + ';';
 
         RunQuery(selectQuery, function (rows) {
@@ -120,7 +120,7 @@ router.route('/review')
 router.route('/order')
     .get(function (req, res, next) {
         var insertQuery = '\
-            INSERT INTO Orders\
+            INSERT INTO waroeng.orders\
             VALUES(null, ' +
             req.user.UserID + ', ' +
             req.session.address.AddressID + ', ' +
@@ -136,14 +136,14 @@ router.route('/order')
                 if (req.session.cart[item].quantity > 0) {
 
                     insertQuery = '\
-                        INSERT INTO `Order Details`\
+                        INSERT INTO `waroeng.order waroeng.details`\
                         VALUES(' +
                         rows.insertId + ', ' +
                         req.session.cart[item].ProductID + ', ' +
                         req.session.cart[item].quantity + ', ' +
                         req.session.cart[item].productTotal + ');';
 
-                    updateQuery='UPDATE Products\
+                    updateQuery='UPDATE waroeng.products\
                             SET UnitsInStock = (UnitsInStock - ' + req.session.cart[item].quantity +
                         ') WHERE ProductID = ' + req.session.cart[item].ProductID;
 
@@ -159,28 +159,28 @@ router.route('/order')
             //get order info
             var selectQuery = '\
             SELECT *\
-            FROM Orders\
+            FROM waroeng.orders\
             WHERE OrderID = ' + rows.insertId;
 
             RunQuery(selectQuery, function (order) {
                 //get delivery info
                 selectQuery = '\
                 SELECT *\
-                FROM Addresses\
+                FROM waroeng.addresses\
                 WHERE AddressID = ' + order[0].AddressID;
 
                 RunQuery(selectQuery, function (address) {
                     //get order info
                     selectQuery = '\
                     SELECT *\
-                    FROM `Order Details`\
+                    FROM `waroeng.order waroeng.details`\
                     INNER JOIN (\
-                        SELECT Products.*, Categories.CategorySlug\
-                        FROM Products\
-                        INNER JOIN Categories\
-                        ON Products.CategoryID = Categories.CategoryID\
+                        SELECT waroeng.products.*, waroeng.categories.CategorySlug\
+                        FROM waroeng.products\
+                        INNER JOIN waroeng.categories\
+                        ON waroeng.products.CategoryID = waroeng.categories.CategoryID\
                     ) `Table`\
-                    ON `Order Details`.ProductID = `Table`.ProductID\
+                    ON `waroeng.order waroeng.details`.ProductID = `Table`.ProductID\
                     WHERE OrderID = ' + order[0].OrderID;
 
                     RunQuery(selectQuery, function (products) {

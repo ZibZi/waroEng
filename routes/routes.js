@@ -9,14 +9,14 @@ var RunQuery = database.RunQuery;
 router.all('/', function (req, res, next) {
     var sqlStr = '\
         SELECT *\
-        FROM Categories';
+        FROM waroeng.categories';
 
     RunQuery(sqlStr, function (categories) {
         sqlStr = '\
-            SELECT Products.*, Categories.CategoryName, Categories.CategorySlug\
-            FROM Products\
-            INNER JOIN Categories\
-            ON Products.CategoryID = Categories.CategoryID\
+            SELECT waroeng.products.*, waroeng.categories.CategoryName, waroeng.categories.CategorySlug\
+            FROM waroeng.products\
+            INNER JOIN waroeng.categories\
+            ON waroeng.products.CategoryID = waroeng.categories.CategoryID\
             WHERE Feature = 1';
 
         RunQuery(sqlStr, function (products) {
@@ -39,7 +39,7 @@ router.route('/cat/')
     .all(function (req, res, next) {
         var sqlStr = '\
         SELECT *\
-        FROM Categories';
+        FROM waroeng.categories';
 
         RunQuery(sqlStr, function (categories) {
             var contextDict = {
@@ -58,16 +58,16 @@ router.route('/cat/:catSlug')
     .all(function (req, res, next) {
         if (req.params.catSlug == "all") {
             var selectQuery = '\
-                SELECT Products.*, Categories.CategoryName, Categories.CategorySlug\
-                FROM Products\
-                INNER JOIN Categories\
-                ON Products.CategoryID = Categories.CategoryID';
+                SELECT waroeng.products.*, waroeng.categories.CategoryName, waroeng.categories.CategorySlug\
+                FROM waroeng.products\
+                INNER JOIN waroeng.categories\
+                ON waroeng.products.CategoryID = waroeng.categories.CategoryID';
 
             RunQuery(selectQuery, function (products) {
 
                 selectQuery = '\
                 SELECT *\
-                FROM Categories';
+                FROM waroeng.categories';
 
                 RunQuery(selectQuery, function (categories) {
 
@@ -84,17 +84,17 @@ router.route('/cat/:catSlug')
         }
         else {
             var sqlStr = '\
-                SELECT Products.*, Categories.CategoryName, Categories.CategorySlug\
-                FROM Products\
-                INNER JOIN Categories\
-                ON Products.CategoryID = Categories.CategoryID\
-                WHERE Categories.CategorySlug = \'' + req.params.catSlug + '\'';
+                SELECT waroeng.products.*, waroeng.categories.CategoryName, waroeng.categories.CategorySlug\
+                FROM waroeng.products\
+                INNER JOIN waroeng.categories\
+                ON waroeng.products.CategoryID = waroeng.categories.CategoryID\
+                WHERE waroeng.categories.CategorySlug = \'' + req.params.catSlug + '\'';
 
             RunQuery(sqlStr, function (products) {
 
                 sqlStr = '\
                 SELECT *\
-                FROM Categories';
+                FROM waroeng.categories';
 
                 RunQuery(sqlStr, function (categories) {
 
@@ -116,7 +116,7 @@ router.route('/cat/:catSlug/:prodSlug')
     .all(function (req, res, next) {
         var sqlStr = '\
         SELECT *\
-        FROM Products\
+        FROM waroeng.products\
         WHERE ProductSlug = \'' + req.params.prodSlug + '\'';
 
         RunQuery(sqlStr, function (product) {
@@ -134,7 +134,7 @@ router.route('/cat/:catSlug/:prodSlug')
 router.route('/subscribe')
     .post(function (req, res, next) {
         var sqlStr = '\
-        INSERT INTO Subscribers\
+        INSERT INTO waroeng.subscribers\
         VALUES (\'' + req.body.email + '\')';
 
         RunQuery(sqlStr, function (result) {

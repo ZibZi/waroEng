@@ -104,10 +104,10 @@ router.route('/:id/add')
         var summary = req.session.summary;
 
         var selectQuery = '\
-            SELECT Products.*, Categories.CategorySlug\
-            FROM Products\
-            INNER JOIN Categories\
-            ON Products.CategoryID = Categories.CategoryID\
+            SELECT waroeng.products.*, waroeng.categories.CategorySlug\
+            FROM waroeng.products\
+            INNER JOIN waroeng.categories\
+            ON waroeng.products.CategoryID = waroeng.categories.CategoryID\
             WHERE ProductID = ' + req.params.id;
 
         RunQuery(selectQuery, function (rows) {
